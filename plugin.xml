@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="com.flyingsoftgames.googleplayquery" version="0.1.0">
+ <name>Google Play Query Javascript API</name>
+ <description>Access the query strings users installed your game with on Google Play with Javascript.</description>
+ <author>Michael Romanovsky</author>
+ <license>MIT (see readme.md)</license>
+ <keywords>cordova,phonegap,android,agamemnus,flyingsoftgames,google play,query string,query,url parameters,url,coupon codes,coupon code,coupon,install codes,install code,bonus codes,bonus code,redemption codes,redemption code,secret codes,secret code,tracking code,marketing code,campaign measurement</keywords>
+ <engines><engine name="cordova" version=">=3.0.0" /></engines>
+ 
+ <js-module src="www/googleplayquery.js" name="GooglePlayQuery"><clobbers target="window.plugins.GooglePlayQuery" /></js-module>
+ <platform name="android">
+  <config-file target="res/xml/config.xml" parent="/*">
+   <feature name="GooglePlayQuery">
+    <param name="android-package" value="com.flyingsoftgames.googleplayquery.GooglePlayQuery"/>
+    <param name="android-package" value="com.flyingsoftgames.googleplayquery.QueryReceiver"/>
+   </feature>
+  </config-file>
+  <dependency id="android.support.v4" />
+  <source-file src="src/android/GooglePlayQuery.java" target-dir="src/com/flyingsoftgames/googleplayquery" />
+  <source-file src="src/android/QueryReceiver.java"   target-dir="src/com/flyingsoftgames/googleplayquery" />
+  <config-file target="AndroidManifest.xml" parent="/manifest/application">
+   <receiver android:exported="true" android:name="com.flyingsoftgames.googleplayquery.QueryReceiver">
+    <intent-filter>
+     <action android:name="com.android.vending.INSTALL_REFERRER" />
+    </intent-filter>
+   </receiver>
+  </config-file>
+  <config-file target="AndroidManifest.xml" parent="/manifest">
+   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  </config-file>
+ </platform>
+</plugin>
